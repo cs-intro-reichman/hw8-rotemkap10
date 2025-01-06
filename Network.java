@@ -188,7 +188,7 @@ public class Network {
                 }
             }
             if(i == userCount-1){
-
+                result += "";
             }
             else{
                 result += "\n";
