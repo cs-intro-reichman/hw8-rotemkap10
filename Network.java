@@ -57,13 +57,14 @@ public class Network {
     return false;
     }
 
-    /** Makes the user with name1 follow the user with name2. If successful, returns true.
+    /** Makes the user with name1 follow the user with name2. If  successful, returns true.
      *  If any of the two names is not a user in this network,
      *  or if the "follows" addition failed for some reason, returns false. */
     public boolean addFollowee(String name1, String name2) {
-        if (name1.equalsIgnoreCase(name2)) {
-            return false;
+        if (name1 == null || name2 == null || name1.equalsIgnoreCase(name2)) {
+            return false; 
         }
+    
         User user1 = null;
         User user2 = null;
         for (int i = 0; i < userCount; i++) {
@@ -75,13 +76,16 @@ public class Network {
                     user2 = this.users[i];
                 }
             }
+         
             if (user1 != null && user2 != null) {
                 break;
             }
         }
+    
         if (user1 == null || user2 == null) {
             return false;
         }
+    
         return user1.addFollowee(name2);
 }
     /** For the user with the given name, recommends another user to follow. The recommended user is
@@ -144,21 +148,23 @@ public class Network {
     private int followeeCount(String name) {
         int count = 0;
 
-    for (int i = 0; i < userCount; i++) {
-        if (this.users[i] != null) {
-            String[] ar = this.users[i].getfFollows(); 
-            if (ar != null) {
-                for (int j = 0; j < ar.length; j++) { 
-                    if (ar[j].equalsIgnoreCase(name)) {
-                        count++;
-                        break; 
+        for (int i = 0; i < userCount; i++) {
+            if (this.users[i] != null) {
+                String[] follows = this.users[i].getfFollows();
+                if (follows != null) {
+                    for (int j = 0; j < follows.length; j++) {
+                       
+                        if (follows[j] != null && follows[j].equalsIgnoreCase(name)) {
+                            count++;
+                            break; 
+                        }
                     }
                 }
             }
         }
-    }
-
-    return count;
+    
+        return count;
+    
     }
 
     // Returns a textual description of all the users in this network, and who they follow.
@@ -166,24 +172,26 @@ public class Network {
         if (userCount == 0) {
             return "Network:"; 
         }
-        String result = "Network:\n";
+        
+        StringBuilder result = new StringBuilder("Network:\n");
+        
         for (int i = 0; i < userCount; i++) {
-            result += users[i].getName() + " -> ";
+            result.append(users[i].getName()).append(" -> ");
+            
             String[] follows = users[i].getfFollows();
-            for (int j = 0; j < users[i].getfCount(); j++) {
-                result += follows[j];
-                if (j < users[i].getfCount() - 1) {
-                    result += " "; 
+            if (users[i].getfCount() > 0) {
+                
+                for (int j = 0; j < users[i].getfCount(); j++) {
+                    result.append(follows[j]);
+                    if (j < users[i].getfCount() - 1) {
+                        result.append(" "); 
+                    }
                 }
             }
-        }
-        if (result.isEmpty()) {
-            return result;
-        } else {
-            return result.substring(0, result.length() - 1);
+            result.append("\n"); 
         }
         
-        
+        return result.toString();
     }
 }
 

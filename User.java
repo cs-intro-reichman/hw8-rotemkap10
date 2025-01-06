@@ -120,31 +120,29 @@
     }
 
     /** Checks is this user is a friend of the other user.
-     *  (if two users follow each other, they are said to be "friends.") */
+     *  (if two users follow each other, they  are said to be "friends.") */
     public boolean isFriendOf(User other) {
-        boolean is = false;
-        for(int i =0; i<follows.length; i++)
-        {
-            if(follows[i]!=null && follows[i].equalsIgnoreCase(other.name))
-            {
-                is = true;
-                break;
-            }
-            else{
-                is = false;
-            }
+        boolean thisFollowsOther = false;
+    boolean otherFollowsThis = false;
+
+    // Check if 'this' user follows 'other'
+    for (int i = 0; i < follows.length; i++) {
+        if (follows[i] != null && follows[i].equalsIgnoreCase(other.name)) {
+            thisFollowsOther = true;
+            break;
         }
-        for(int i =0; i<other.follows.length; i++){
-            if(other.follows[i]!=null && other.follows[i].equalsIgnoreCase(name))
-            {
-                is = true;
-                break;
-            }
-            else{
-                is = false;
-            }
+    }
+
+    // Check if 'other' user follows 'this'
+    for (int i = 0; i < other.follows.length; i++) {
+        if (other.follows[i] != null && other.follows[i].equalsIgnoreCase(this.name)) {
+            otherFollowsThis = true;
+            break;
         }
-        return is;
+    }
+
+    // Return true only if both users follow each other
+    return thisFollowsOther && otherFollowsThis;
     }
     /** Returns this user's name, and the names that s/he follows. */
     public String toString() {
