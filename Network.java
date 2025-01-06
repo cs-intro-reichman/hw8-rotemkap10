@@ -187,13 +187,10 @@ public class Network {
                     }
                 }
             }
-            if(i == userCount-1){
-                result += "";
-            }
-            else{
-                result += "\n";
-            }
             
+            if (i < userCount - 1) {
+                result += "\n"; 
+            }
         }
         
         return result;
