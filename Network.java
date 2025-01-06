@@ -173,25 +173,29 @@ public class Network {
             return "Network:"; 
         }
         
-        StringBuilder result = new StringBuilder("Network:\n");
+        String result = "Network:\n";
         
         for (int i = 0; i < userCount; i++) {
-            result.append(users[i].getName()).append(" -> ");
+            result += users[i].getName() + " -> ";
             
             String[] follows = users[i].getfFollows();
             if (users[i].getfCount() > 0) {
-                
                 for (int j = 0; j < users[i].getfCount(); j++) {
-                    result.append(follows[j]);
+                    result += follows[j];
                     if (j < users[i].getfCount() - 1) {
-                        result.append(" "); 
+                        result += " "; 
                     }
                 }
             }
-            result.append("\n"); 
+            if(i == userCount-1){
+
+            }
+            else{
+                result += "\n";
+            }
+            
         }
         
-        return result.toString();
-    }
+        return result;
 }
-
+}
